@@ -1,0 +1,10 @@
+/babeliocli
+*.exe
+*.test
+*.out
+coverage.txt
+dist/
+.idea/
+.vscode/
+.DS_Store
+.claude/
