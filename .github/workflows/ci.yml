@@ -24,10 +24,14 @@ jobs:
       - name: Vet
         run: go vet ./...
 
+      # Install golangci-lint via `go install` so it is compiled with the
+      # runner's Go toolchain (matches our go.mod target). The prebuilt
+      # release binary is built with Go 1.24 and refuses Go 1.25 targets.
+      - name: Install golangci-lint
+        run: go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest
+
       - name: Lint
-        uses: golangci/golangci-lint-action@v7
-        with:
-          version: v2.1
+        run: golangci-lint run
 
   test:
     needs: lint
