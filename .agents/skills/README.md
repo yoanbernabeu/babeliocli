@@ -14,4 +14,14 @@ These skills help AI coding agents (Claude Code, Cursor, Copilot, …) drive `ba
 
 Skills are Markdown files that give AI coding agents specialized knowledge about a tool. Instead of the agent exploring the codebase to find answers, it gets curated, accurate instructions that describe the commands, the JSON schema, and common pitfalls.
 
-Point your agent at the relevant `SKILL.md` (or install via [skills.sh](https://skills.sh/)) before asking it to run `babeliocli` on your behalf.
+## Installation
+
+Install with [skills.sh](https://skills.sh/):
+
+```bash
+npx skills add https://github.com/yoanbernabeu/babeliocli --skill babeliocli-setup
+npx skills add https://github.com/yoanbernabeu/babeliocli --skill babeliocli-library
+npx skills add https://github.com/yoanbernabeu/babeliocli --skill babeliocli-discover
+```
+
+Or point your agent at the relevant `SKILL.md` file directly before asking it to run `babeliocli` on your behalf.

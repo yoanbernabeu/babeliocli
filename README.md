@@ -122,6 +122,14 @@ Because parsing depends on Babelio's HTML structure, the CLI can break if the si
 
 `babeliocli` ships with [skills](.agents/skills/) for AI coding agents (Claude Code, Cursor, Copilot). They teach the agent how to authenticate, query shelves, and produce grouped reports directly from your editor.
 
+Install them with [skills.sh](https://skills.sh/):
+
+```bash
+npx skills add https://github.com/yoanbernabeu/babeliocli --skill babeliocli-setup
+npx skills add https://github.com/yoanbernabeu/babeliocli --skill babeliocli-library
+npx skills add https://github.com/yoanbernabeu/babeliocli --skill babeliocli-discover
+```
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Bug reports and PRs welcome.
