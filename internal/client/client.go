@@ -205,7 +205,7 @@ func Login(username, password string) (*Client, error) {
 		return nil, err
 	}
 	_, _ = io.Copy(io.Discard, resp.Body)
-	resp.Body.Close()
+	_ = resp.Body.Close()
 
 	u, _ := url.Parse(babelioURL)
 	var hasIDUser bool
