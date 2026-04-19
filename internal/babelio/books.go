@@ -16,9 +16,9 @@ type Book struct {
 	Author    string   `json:"author,omitempty"`
 	AuthorID  string   `json:"author_id,omitempty"`
 	BookURL   string   `json:"book_url,omitempty"`
-	Status    string   `json:"status,omitempty"`     // À lire, Lu, etc.
-	Rating    int      `json:"rating,omitempty"`     // 0-5, 0 = not rated
-	Readers   int      `json:"readers,omitempty"`    // nb lecteurs
+	Status    string   `json:"status,omitempty"`  // À lire, Lu, etc.
+	Rating    int      `json:"rating,omitempty"`  // 0-5, 0 = not rated
+	Readers   int      `json:"readers,omitempty"` // nb lecteurs
 	Tags      []string `json:"tags,omitempty"`
 	ReadStart string   `json:"read_start,omitempty"` // YYYY-MM-DD
 	ReadEnd   string   `json:"read_end,omitempty"`   // YYYY-MM-DD

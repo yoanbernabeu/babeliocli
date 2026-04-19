@@ -12,9 +12,9 @@ import (
 )
 
 var (
-	booksShelf     string
-	booksLimit     int
-	booksMaxPages  int
+	booksShelf    string
+	booksLimit    int
+	booksMaxPages int
 )
 
 var booksCmd = &cobra.Command{

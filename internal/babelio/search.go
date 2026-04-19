@@ -20,6 +20,7 @@ type SearchResult struct {
 // Babelio uses two different layouts depending on the query:
 //   - `div.cr_carte`: rich card (title match or mixed query)
 //   - `li.item` > `div.fiche_livreH`: mosaic tile (exact author match)
+//
 // Both are parsed; results are de-duplicated by book ID.
 func ParseSearchResults(doc *goquery.Document) []SearchResult {
 	var results []SearchResult

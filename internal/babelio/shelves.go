@@ -16,13 +16,13 @@ type Shelf struct {
 }
 
 var shelfKeyMap = map[string]string{
-	"s1=0":        "en-cours",
-	"s1=1":        "lus",
-	"s1=2":        "a-lire",
-	"s1=3":        "pense-bete",
-	"s1=4":        "abandonnes",
-	"s3=10":       "critiques",
-	"s3=11":       "non-critiques",
+	"s1=0":         "en-cours",
+	"s1=1":         "lus",
+	"s1=2":         "a-lire",
+	"s1=3":         "pense-bete",
+	"s1=4":         "abandonnes",
+	"s3=10":        "critiques",
+	"s3=11":        "non-critiques",
 	"action=toute": "all",
 }
 

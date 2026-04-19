@@ -25,10 +25,10 @@ type storedCookie struct {
 }
 
 type Session struct {
-	Cookies   []storedCookie `json:"cookies"`
-	IDUser    string         `json:"id_user,omitempty"`
-	Username  string         `json:"username,omitempty"`
-	SavedAt   time.Time      `json:"saved_at"`
+	Cookies  []storedCookie `json:"cookies"`
+	IDUser   string         `json:"id_user,omitempty"`
+	Username string         `json:"username,omitempty"`
+	SavedAt  time.Time      `json:"saved_at"`
 }
 
 func sessionDir() (string, error) {
@@ -87,7 +87,7 @@ func SaveSession(jar http.CookieJar, username string) error {
 	if err != nil {
 		return err
 	}
-	defer f.Close()
+	defer func() { _ = f.Close() }()
 	enc := json.NewEncoder(f)
 	enc.SetIndent("", "  ")
 	return enc.Encode(&sess)

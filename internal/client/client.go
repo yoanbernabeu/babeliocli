@@ -60,40 +60,33 @@ func (c *Client) Username() string {
 // redirected to the login page. Callers should prompt the user to re-import.
 var ErrSessionExpired = errors.New("session expired: run `babeliocli login` or `babeliocli session import` again")
 
-func (c *Client) get(path string) (*goquery.Document, *http.Response, error) {
-	u := babelioURL + path
-	req, err := http.NewRequest(http.MethodGet, u, nil)
+// Get fetches the given path, checks for a redirect to the login page, and
+// returns a goquery document. The response body is always closed before
+// returning.
+func (c *Client) Get(path string) (*goquery.Document, error) {
+	req, err := http.NewRequest(http.MethodGet, babelioURL+path, nil)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 	req.Header.Set("User-Agent", userAgent)
 	req.Header.Set("Accept", "text/html,application/xhtml+xml")
 	req.Header.Set("Accept-Language", "fr-FR,fr;q=0.9")
 	resp, err := c.http.Do(req)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 	if strings.Contains(resp.Request.URL.Path, "connection.php") && !strings.Contains(path, "connection.php") {
-		return nil, resp, ErrSessionExpired
+		return nil, ErrSessionExpired
 	}
 	if resp.StatusCode >= 400 {
-		return nil, resp, fmt.Errorf("GET %s: HTTP %d", path, resp.StatusCode)
+		return nil, fmt.Errorf("GET %s: HTTP %d", path, resp.StatusCode)
 	}
 	reader, err := charset.NewReader(resp.Body, resp.Header.Get("Content-Type"))
 	if err != nil {
-		return nil, resp, fmt.Errorf("charset decode: %w", err)
+		return nil, fmt.Errorf("charset decode: %w", err)
 	}
-	doc, err := goquery.NewDocumentFromReader(reader)
-	if err != nil {
-		return nil, resp, err
-	}
-	return doc, resp, nil
-}
-
-func (c *Client) Get(path string) (*goquery.Document, error) {
-	doc, _, err := c.get(path)
-	return doc, err
+	return goquery.NewDocumentFromReader(reader)
 }
 
 // PostForm submits a POST with application/x-www-form-urlencoded body and
@@ -113,7 +106,7 @@ func (c *Client) PostForm(path string, form url.Values) (*goquery.Document, erro
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 	if resp.StatusCode >= 400 {
 		return nil, fmt.Errorf("POST %s: HTTP %d", path, resp.StatusCode)
 	}
@@ -165,7 +158,7 @@ func (c *Client) verifyAuthenticated() error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 	_, _ = io.Copy(io.Discard, resp.Body)
 	final := resp.Request.URL.Path
 	if strings.Contains(final, "connection.php") {
